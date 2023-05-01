@@ -2,6 +2,7 @@ import { useState } from "react";
 import AppSummary from "./components/AppSummary/AppSummary";
 import Header from "./components/Header/Header";
 import MealsList from "./components/Meals/MealsList/MealsList";
+import CartContext from "./context/cart-context";
 
 const DUMMY_MEALS = [
   {
@@ -34,11 +35,11 @@ function App() {
   const [meals, setMeals] = useState(DUMMY_MEALS);
 
   return (
-    <div>
+    <CartContext.Provider value={{items: []}}>
       <Header />
       <AppSummary />
       <MealsList meals={meals} />
-    </div>
+    </CartContext.Provider>
   );
 }
 
