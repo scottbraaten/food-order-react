@@ -1,7 +1,13 @@
+import AppSummary from "./components/AppSummary/AppSummary";
+import Header from "./components/Header/Header";
+import MealsList from "./components/MealsList/MealsList";
+
 function App() {
   return (
     <div>
-      <h2>Let's get started!</h2>
+      <Header />
+      <AppSummary />
+      <MealsList />
     </div>
   );
 }
