@@ -1,4 +1,4 @@
-import CartIcon from '../../UI/CartIcon';
+import CartIcon from '../../UI/CartIcon/CartIcon';
 import classes from './HeaderCartButton.module.css';
 
 const HeaderCartButton = () => {
