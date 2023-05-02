@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+
+import CartContext from '../../../context/cart-context';
 
 import CartIcon from '../../UI/CartIcon/CartIcon';
-
-import classes from './HeaderCartButton.module.css';
 import Modal from '../../UI/Modal/Modal';
 
+import classes from './HeaderCartButton.module.css';
+
+
 const HeaderCartButton = () => {
+    const cartContext = useContext(CartContext);
+
     const [clicked, setClicked] = useState(false);
+
+    const size = cartContext.items.length;
     const handleClick = () => {
         setClicked(true);
     }
@@ -23,7 +30,7 @@ const HeaderCartButton = () => {
                     <CartIcon />
                 </div>
                 <label>Your Cart</label>
-                <div className={classes.badge}>0</div>
+                <div className={classes.badge}>{size}</div>
             </button>
         </>
         

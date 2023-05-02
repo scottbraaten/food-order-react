@@ -37,8 +37,10 @@ function App() {
   return (
     <CartContext.Provider value={{items: []}}>
       <Header />
-      <AppSummary />
-      <MealsList meals={meals} />
+      <main>
+        <AppSummary />
+        <MealsList meals={meals} />
+      </main>
     </CartContext.Provider>
   );
 }

@@ -4,19 +4,23 @@ import classes from './MealsList.module.css';
 
 const MealsList = (props) => {
     return(
-        <Card className={classes.meals}>
-            <ul>
-                {props.meals.map((meal) => {
-                    return (
-                        <MealItem key={Math.random()}
-                            name={meal.name}
-                            desc={meal.description}
-                            price={meal.price}
-                        />
-                    )
-                })}
-            </ul>
-        </Card>
+        <section className={classes.meals}>
+            <Card>
+                <ul>
+                    {props.meals.map((meal) => {
+                        return (
+                            <MealItem 
+                                key={meal.id}
+                                id={meal.id}
+                                name={meal.name}
+                                desc={meal.description}
+                                price={meal.price}
+                            />
+                        )
+                    })}
+                </ul>
+            </Card>
+        </section>
     )
 }
 

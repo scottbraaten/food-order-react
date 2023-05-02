@@ -6,11 +6,13 @@ import meals from '../../assets/meals.jpg';
 const Header = props => {
     return (
         <>
-        <div className={classes.header}>
+        <header className={classes.header}>
             <h1>ReactMeals</h1>
             <HeaderCartButton />
+        </header>
+        <div className={classes['main-image']}>
+            <img src={meals} alt="Food table" />
         </div>
-        <img src={meals} className={classes['main-image']} />
         </>
     )
 }

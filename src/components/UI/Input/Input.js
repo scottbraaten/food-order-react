@@ -4,8 +4,8 @@ const Input = (props) => {
 
     return (
         <div className={classes.input}>
-            <label>{props.label}</label>
-            <input type="number" value={props.value} onChange={props.onChange} />
+            <label htmlFor={props.mealID}>{props.label}</label>
+            <input {...props.input}/>
         </div>
     )
 }

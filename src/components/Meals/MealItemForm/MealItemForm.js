@@ -26,12 +26,15 @@ const MealItemForm = (props) => {
         }
     }
     return (
-        <div className={classes.form}>
-            <form onSubmit={handleSubmit}>
-                <Input label='Amount' onChange={handleAmtChange} value={qty} />
-                <button type='submit'>+ Add</button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit} className={classes.form}>
+            <Input label='Amount' input={{
+                onChange: handleAmtChange,
+                id: props.id + 'amount',
+                step: '1',
+                defaultValue: '1'
+            }} />
+            <button type='submit'>+ Add</button>
+        </form>
     )
 }
 
