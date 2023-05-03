@@ -1,11 +1,8 @@
 import ReactDOM from 'react-dom';
-import { useContext } from 'react';
-
-import classes from './Modal.module.css';
 
 import Card from "../Card/Card"
-import CartContext from '../../../context/cart-context';
-import Cart from '../../Cart/Cart/Cart';
+
+import classes from './Modal.module.css';
 
 const Backdrop = props => {
     return <div className={classes.backdrop} onClick={props.onConfirm} />
@@ -13,9 +10,9 @@ const Backdrop = props => {
 
 const ModalOverlay = (props) => {
     return (
-        <Card className={classes.modal}>
-            <Cart close={props.onConfirm} />
-        </Card>
+        <div className={classes.modal}>
+            <div className={classes.content}>{props.children}</div>
+        </div>
     )
 }
 
@@ -27,7 +24,7 @@ const Modal = props => {
             document.getElementById('backdrop-root')
         )}
         {ReactDOM.createPortal(
-            <ModalOverlay onConfirm={props.onConfirm} />,
+            <ModalOverlay onConfirm={props.onConfirm}>{props.children}</ModalOverlay>,
             document.getElementById('overlay-root')
         )}
         </>

@@ -6,6 +6,7 @@ import CartIcon from '../../UI/CartIcon/CartIcon';
 import Modal from '../../UI/Modal/Modal';
 
 import classes from './HeaderCartButton.module.css';
+import Cart from '../../Cart/Cart/Cart';
 
 
 const HeaderCartButton = () => {
@@ -23,7 +24,7 @@ const HeaderCartButton = () => {
     return (
         <>
             {clicked && (
-                <Modal onConfirm={closeModal} />
+                <Cart onConfirm={closeModal} />
             )}
             <button onClick={handleClick} className={classes.button}>
                 <div className={classes.icon}>
