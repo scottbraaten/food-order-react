@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import CartContext from '../../../context/cart-context';
 
@@ -9,8 +9,14 @@ import classes from './HeaderCartButton.module.css';
 import Cart from '../../Cart/Cart/Cart';
 
 
-const HeaderCartButton = () => {
+const HeaderCartButton = (props) => {
     const cartContext = useContext(CartContext);
+
+    console.log(props.items);
+    
+    useEffect(() => {
+        console.log(cartContext.items)
+    }, [cartContext]);
 
     const [clicked, setClicked] = useState(false);
 

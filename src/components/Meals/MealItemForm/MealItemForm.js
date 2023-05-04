@@ -24,6 +24,7 @@ const MealItemForm = (props) => {
         } else {
             cartContext.items[cartContext.items.findIndex((a) => a.name === props.name)].qty += qty;
         }
+
     }
     return (
         <form onSubmit={handleSubmit} className={classes.form}>
