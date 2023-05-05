@@ -17,7 +17,6 @@ const Cart = (props) => {
     const cartItemRemoveHandler = (item) => {
         cartContext.removeItem(item);
     };
-
     const cartItemAddHandler = (item) => {
         cartContext.addItem(item);
     };
@@ -33,17 +32,17 @@ const Cart = (props) => {
 
     return (
         <Modal onClose={props.onClose}>
-        {cartItems}
-        <div className={classes.total}>
-            <span>Total Amount</span>
-            <span>{totalAmount}</span>
-        </div>
-        <div className={classes.actions}>
-            <button className={classes['button--alt']} onClick={props.onClose}>
-            Close
-            </button>
-            {hasItems && <button className={classes.button}>Order</button>}
-        </div>
+            {cartItems}
+            <div className={classes.total}>
+                <span>Total Amount</span>
+                <span>{totalAmount}</span>
+            </div>
+            <div className={classes.actions}>
+                <button className={classes['button--alt']} onClick={props.onClose}>
+                Close
+                </button>
+                {hasItems && <button className={classes.button}>Order</button>}
+            </div>
         </Modal>
     )
 }

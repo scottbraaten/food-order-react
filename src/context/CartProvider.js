@@ -9,6 +9,7 @@ const defaultCartState = {
 const cartReducer = (state, action) => {
     if (action.type === 'ADD') {
         const item = state.items.find((item) => item.id === action.item.id);
+
         if (item) {
             const qty = item.qty + 1;
             const updatedItems = state.items.filter((item) => item.id !== action.item.id);
@@ -19,6 +20,7 @@ const cartReducer = (state, action) => {
                 totalAmount: updatedTotalAmount
             };
         }
+
         const updatedItems = state.items.concat(action.item);
         const updatedTotalAmount = state.totalAmount + action.item.price * action.item.qty;
         return {
@@ -31,11 +33,13 @@ const cartReducer = (state, action) => {
             const updatedItems = state.items.filter((item) => item.id !== action.item.id);
             const finalItems = [...updatedItems, {...action.item, qty: qty }];
             const updatedTotalAmount = state.totalAmount - action.item.price;
+            
             return {
                 items: finalItems,
                 totalAmount: updatedTotalAmount
             };
         }
+
         const updatedItems = state.items.filter((item) => item.id !== action.item.id);
         const updatedTotalAmount = state.totalAmount - action.item.price * action.item.qty;
         return {
