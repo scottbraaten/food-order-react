@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import AppSummary from "./components/AppSummary/AppSummary";
 import Header from "./components/Header/Header";
 import MealsList from "./components/Meals/MealsList/MealsList";
 import CartContext from "./context/cart-context";
+import CartProvider from "./context/CartProvider";
+import Cart from "./components/Cart/Cart/Cart";
 
 const DUMMY_MEALS = [
   {
@@ -31,17 +33,31 @@ const DUMMY_MEALS = [
   },
 ];
 
+
+
 function App() {
   const [meals, setMeals] = useState(DUMMY_MEALS);
+  const [cartIsShown, setCartIsShown] = useState(false);
+
+  const cartContext = useContext(CartContext);
+
+  const showCartHandler = () => {
+    setCartIsShown(true);
+  };
+
+  const hideCartHandler = () => {
+    setCartIsShown(false);
+  };
 
   return (
-    <CartContext.Provider value={{items: []}}>
-      <Header />
+    <CartProvider>
+      {cartIsShown && <Cart onClose={hideCartHandler} />}
+      <Header onShowCart={showCartHandler} />
       <main>
         <AppSummary />
         <MealsList meals={meals} />
       </main>
-    </CartContext.Provider>
+    </CartProvider>
   );
 }
 
