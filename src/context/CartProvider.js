@@ -14,6 +14,7 @@ const cartReducer = (state, action) => {
             const qty = item.qty + 1;
             const updatedItems = state.items.filter((item) => item.id !== action.item.id);
             const finalItems = [...updatedItems, {...item, qty: qty }];
+            finalItems.sort((a, b) => a.qty - b.qty);
             const updatedTotalAmount = state.totalAmount + item.price;
             return {
                 items: finalItems,
@@ -22,6 +23,7 @@ const cartReducer = (state, action) => {
         }
 
         const updatedItems = state.items.concat(action.item);
+        updatedItems.sort((a, b) => a.qty - b.qty);
         const updatedTotalAmount = state.totalAmount + action.item.price * action.item.qty;
         return {
             items: updatedItems,
@@ -32,6 +34,7 @@ const cartReducer = (state, action) => {
             const qty = action.item.qty - 1;
             const updatedItems = state.items.filter((item) => item.id !== action.item.id);
             const finalItems = [...updatedItems, {...action.item, qty: qty }];
+            finalItems.sort((a, b) => a.qty - b.qty);
             const updatedTotalAmount = state.totalAmount - action.item.price;
             
             return {
