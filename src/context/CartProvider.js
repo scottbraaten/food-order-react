@@ -11,7 +11,7 @@ const cartReducer = (state, action) => {
         const item = state.items.find((item) => item.id === action.item.id);
 
         if (item) {
-            const qty = item.qty + 1;
+            const qty = item.qty + action.item.qty;
             const updatedItems = state.items.filter((item) => item.id !== action.item.id);
             const finalItems = [...updatedItems, {...item, qty: qty }];
             finalItems.sort((a, b) => a.qty - b.qty);
