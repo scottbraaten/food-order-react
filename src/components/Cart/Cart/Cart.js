@@ -12,7 +12,9 @@ const Cart = (props) => {
 
   const [ordering, setOrdering] = useState(false);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [street, setStreet] = useState("");
+  const [zip, setZip] = useState("");
+  const [city, setCity] = useState("");
 
   const totalAmount = `$${cartContext.totalAmount.toFixed(2)}`;
   const hasItems = cartContext.items.length > 0;
@@ -32,51 +34,64 @@ const Cart = (props) => {
     setName(e.target.value);
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleStreetChange = (e) => {
+    setStreet(e.target.value);
   };
 
-  const handleOrderSubmit = async (e) => {
+  const handleZipChange = (e) => {
+    setZip(e.target.value);
+  };
+
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
+  };
+
+  const handleOrderSubmit = (e) => {
     e.preventDefault();
 
     const order = {
       name: name,
-      email: email,
+      street: street,
+      zip: zip,
+      city: city,
       meals: cartContext.items,
     };
 
-    const response = await fetch(
-      "https://react-http-ec3e5-default-rtdb.firebaseio.com/meals.json",
-      {
-        method: "POST",
-        mode: "cors",
-        body: JSON.stringify(order),
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const post = async () => {
+      const response = await fetch(
+        "https://react-http-ec3e5-default-rtdb.firebaseio.com/meals.json",
+        {
+          method: "POST",
+          mode: "cors",
+          body: JSON.stringify(order),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
       }
-    );
-
-    const data = await response.json();
-    console.log(data);
-
-    if (!response.ok) {
-      throw new Error("Something went wrong!");
-    }
+    };
+    post();
   };
 
-  const getMeals = async () => {
-    const response = await fetch(
-      "https://react-http-ec3e5-default-rtdb.firebaseio.com/meals.json"
-    );
+  // const getMeals = async () => {
+  //   const response = await fetch(
+  //     "https://react-http-ec3e5-default-rtdb.firebaseio.com/meals.json"
+  //   );
 
-    if (!response.ok) {
-      throw new Error("Something went wrong!");
-    }
+  //   if (!response.ok) {
+  //     throw new Error("Something went wrong!");
+  //   }
 
-    const data = await response.json();
-    console.log(data);
-  };
+  //   const data = await response.json();
+  //   console.log(data);
+  // };
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
@@ -98,7 +113,7 @@ const Cart = (props) => {
   let content = ordering ? (
     <>
       <form onSubmit={handleOrderSubmit}>
-        <div>
+        <div className={classes.control}>
           <label htmlFor="name">Name</label>
           <input
             type="text"
@@ -107,22 +122,40 @@ const Cart = (props) => {
             value={name}
           />
         </div>
-        <div>
-          <label htmlFor="email">Email</label>
+        <div className={classes.control}>
+          <label htmlFor="street">Street</label>
           <input
-            type="email"
-            id="email"
-            onChange={handleEmailChange}
-            value={email}
+            type="text"
+            id="street"
+            onChange={handleStreetChange}
+            value={street}
           />
         </div>
-        <button type="submit">Order</button>
+        <div className={classes.control}>
+          <label htmlFor="zip-code">Zip Code</label>
+          <input
+            type="text"
+            id="zip-code"
+            onChange={handleZipChange}
+            value={zip}
+          />
+        </div>
+        <div className={classes.control}>
+          <label htmlFor="city">City</label>
+          <input
+            type="text"
+            id="city"
+            onChange={handleCityChange}
+            value={city}
+          />
+        </div>
         <button
-          type="button"
-          onClick={getMeals}
+          className={classes["button--alt"]}
+          onClick={props.onClose}
         >
-          Get Meals
+          Close
         </button>
+        <button type="submit">Confirm</button>
       </form>
     </>
   ) : (
