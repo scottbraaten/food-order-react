@@ -15,9 +15,30 @@ const Cart = (props) => {
   const [street, setStreet] = useState("");
   const [zip, setZip] = useState("");
   const [city, setCity] = useState("");
+  const [formValid, setFormValid] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const totalAmount = `$${cartContext.totalAmount.toFixed(2)}`;
+  const totalAmount = `$${
+    cartContext.totalAmount ? cartContext.totalAmount.toFixed(2) : "$0"
+  }`;
   const hasItems = cartContext.items.length > 0;
+
+  const validate = (order) => {
+    if (order.name.trim() === "") {
+      return false;
+    }
+    if (order.street.trim() === "") {
+      return false;
+    }
+    if (order.zip.trim() === "") {
+      return false;
+    }
+    if (order.city.trim() === "") {
+      return false;
+    }
+    return true;
+  };
 
   const cartItemRemoveHandler = (item) => {
     cartContext.removeItem(item);
@@ -57,9 +78,15 @@ const Cart = (props) => {
       meals: cartContext.items,
     };
 
+    if (!validate(order)) {
+      setFormValid(false);
+      return false;
+    }
+
     const post = async () => {
+      setSubmitting(true);
       const response = await fetch(
-        "https://react-http-ec3e5-default-rtdb.firebaseio.com/meals.json",
+        "https://react-http-ec3e5-default-rtdb.firebaseio.com/orders.json",
         {
           method: "POST",
           mode: "cors",
@@ -69,7 +96,8 @@ const Cart = (props) => {
           },
         }
       );
-
+      setSubmitting(false);
+      setSubmitted(true);
       const data = await response.json();
       console.log(data);
 
@@ -78,6 +106,7 @@ const Cart = (props) => {
       }
     };
     post();
+    cartContext.clearCart();
   };
 
   // const getMeals = async () => {
@@ -184,7 +213,16 @@ const Cart = (props) => {
     </>
   );
 
-  return <Modal onClose={props.onClose}>{content}</Modal>;
+  const contentSubmitting = <p>Sending order data</p>;
+
+  const contentSubmitted = <p>Success!</p>;
+
+  return (
+    <Modal onClose={props.onClose}>
+      {submitting ? contentSubmitting : submitted ? null : content}
+      {submitted && contentSubmitted}
+    </Modal>
+  );
 };
 
 export default Cart;
